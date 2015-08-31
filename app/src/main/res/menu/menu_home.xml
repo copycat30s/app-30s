@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.yahoo.apps.thirty.HomeActivity">
+
+    <item android:id="@+id/action_post" android:title="POST"
+        android:icon="@drawable/ic_action_post"
+        android:orderInCategory="100" app:showAsAction="always"
+        android:onClick="onPost" />
+
+    <item android:id="@+id/action_logout" android:title="@string/action_logout"
+        android:orderInCategory="100" app:showAsAction="never"
+        android:onClick="onLogout" />
+
+</menu>
