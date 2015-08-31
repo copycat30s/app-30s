@@ -33,7 +33,4 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.6'
     // ActiveAndroid for simple persistence with an ORM
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-    // Jumblr dependency
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'org.apache.commons:commons-lang3:3.4'
 }

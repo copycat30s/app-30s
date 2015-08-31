@@ -1,20 +1,16 @@
 package com.yahoo.apps.thirty;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.tumblr.jumblr.JumblrClient;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TumblrApi;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TumblrClient extends OAuthBaseClient
 {
@@ -43,22 +39,19 @@ public class TumblrClient extends OAuthBaseClient
 
     public void postVideo (String blog, String file_path, AsyncHttpResponseHandler handler)
     {
-        String api_url = getApiUrl(String.format("blog/%s.tumblr.com/post", blog));
+        String api_url = getApiUrl(String.format("blog/%s.tumblr.com/post?type=video", blog));
 
         RequestParams params = new RequestParams();
 
         params.put("type", "video");
         try {
-            params.put("data", new File(file_path));
+            File f = new File(file_path);
+            params.put("data", f);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //getClient().post(api_url, params, handler);
-
-        VideoUploadTask t = new VideoUploadTask();
-
-        t.execute(blog, file_path);
+        getClient().post(api_url, params, handler);
     }
 
     public void postText (String blog, String text, AsyncHttpResponseHandler handler)
@@ -71,31 +64,6 @@ public class TumblrClient extends OAuthBaseClient
         params.put("body", text);
 
         getClient().post(api_url, params, handler);
-    }
-
-    class VideoUploadTask extends AsyncTask<String, Void, Boolean>
-    {
-
-        protected Boolean doInBackground (final String... args)
-        {
-            File file = new File(args[1]);
-
-            JumblrClient client = new JumblrClient(REST_CONSUMER_KEY, REST_CONSUMER_SECRET, getClient().getAccessToken().getToken(), getClient().getAccessToken().getSecret());
-
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("type", "video");
-            map.put("data", file);
-
-            try {
-                client.postCreate(args[0] + ".tumblr.com", map);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return true;
-        }
-
     }
 
 }
